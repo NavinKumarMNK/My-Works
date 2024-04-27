@@ -1,0 +1,6 @@
+pandas
+polars
+watermark
+plotly
+ipywidgets
+optuna
