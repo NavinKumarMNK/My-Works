@@ -1,0 +1,16 @@
+from typing import List
+
+
+class Solution:
+    def threeConsecutiveOdds(self, arr: List[int]) -> bool:
+        if len(arr) < 3:
+            return False
+        for i in range(1, len(arr) - 1):
+            if (arr[i - 1] % 2 == 1) and (arr[i] % 2 == 1) and (arr[i + 1] % 2 == 1):
+                return True
+        return False
+
+
+if __name__ == "__main__":
+    obj = Solution()
+    assert obj.threeConsecutiveOdds([2, 6, 4, 1]) is False

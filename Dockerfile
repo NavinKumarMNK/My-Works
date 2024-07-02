@@ -60,4 +60,4 @@ ENV PATH=$NVM_DIR/versions/node/v20.12.2/bin:$PATH
 
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 10 --slave /usr/bin/g++ g++ /usr/bin/g++-13
 RUN rustup default stable
-RUN apt-get install vim
+RUN apt-get install -y vim
