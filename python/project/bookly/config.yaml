@@ -1,0 +1,9 @@
+app:
+  version: v1
+  description: A Rest API for a Book Review Web Service
+  license_info: 
+    name: "MIT License"
+    url: "https://opensource.org/license/mit"
+  contact:
+    name: "Navin Kumar M"
+    url: "https://github.com/NavinKumarMNK"

@@ -1,0 +1,18 @@
+[project]
+name = "bookly"
+version = "0.1.0"
+description = "FastAPI Endpoint Service"
+readme = "README.md"
+requires-python = ">=3.11"
+license="MIT"
+authors = [{ name = "Navin Kumar M" }]
+dependencies = [
+    "asyncpg>=0.29.0",
+    "fastapi[all]>=0.115.0",
+    "psycopg2>=2.9.9",
+    "pydantic>=2.9.2",
+    "sqlalchemy[asyncio]>=2.0.35",
+    "sqlmodel>=0.0.22",
+    "uvicorn>=0.31.0",
+]
+
