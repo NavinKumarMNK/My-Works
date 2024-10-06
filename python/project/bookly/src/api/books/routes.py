@@ -4,20 +4,23 @@ from fastapi import APIRouter, status, Depends
 from fastapi.exceptions import HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
 from src.db.main import get_session
-
+from src.api.auth import AccessTokenBearer
 from .service import BookService
 from .schemas import Book, BookUpdateModel, BookCreateModel, BookResponseModel
 
 book_router = APIRouter()
 book_service = BookService()
-
+access_token_bearer = AccessTokenBearer()
 
 @book_router.get(
     "/", 
     response_model=BookResponseModel,
     status_code=status.HTTP_200_OK,
 )
-async def get_all_books(session: AsyncSession = Depends(get_session)):
+async def get_all_books(
+    session: AsyncSession = Depends(get_session),
+    user_details = Depends(access_token_bearer),
+):
     """Get all books."""
     books = await book_service.get_all_books(session)
     return {
@@ -34,6 +37,7 @@ async def get_all_books(session: AsyncSession = Depends(get_session)):
 async def create_book(
     book_data: BookCreateModel,
     session: AsyncSession = Depends(get_session),
+    user_details = Depends(access_token_bearer),
 ):
     new_book = await book_service.create_book(book_data, session)
     return {
@@ -50,6 +54,7 @@ async def create_book(
 async def get_book(
     book_uid: uuid.UUID,
     session: AsyncSession = Depends(get_session),
+    user_details = Depends(access_token_bearer)  
 ):
     book = await book_service.get_book(book_uid, session)
     if not book:
@@ -72,7 +77,8 @@ async def get_book(
 async def update_book(
     book_uid: uuid.UUID,
     book_update_data: BookUpdateModel,
-    session: AsyncSession = Depends(get_session)
+    session: AsyncSession = Depends(get_session),
+    user_details = Depends(access_token_bearer),
 ):
     updated_book = await book_service.update_book(book_uid, book_update_data, session)
     if not updated_book:
@@ -87,8 +93,16 @@ async def update_book(
     }
 
 
-@book_router.delete("/{book_uid}", status_code=status.HTTP_200_OK)
-async def delete_book(book_uid: uuid.UUID, session: AsyncSession = Depends(get_session)):
+@book_router.delete(
+    "/{book_uid}", 
+    status_code=status.HTTP_200_OK,
+    response_model=dict
+)
+async def delete_book(
+    book_uid: uuid.UUID,
+    session: AsyncSession = Depends(get_session),
+    user_details = Depends(access_token_bearer),
+):
     book_to_delete = await book_service.delete_book(book_uid, session)
 
     if not book_to_delete:

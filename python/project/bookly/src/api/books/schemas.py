@@ -26,7 +26,7 @@ class BookDetailModel(Book):
 
 
 class BookCreateModel(BaseModel):
-    "CreateView for the Book"
+    """CreateView for the Book"""
     title: str
     author: str
     publisher: str

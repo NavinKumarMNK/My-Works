@@ -1,16 +1,11 @@
-import logging
-
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, status
 
 from src.api.books.routes import book_router
-from src.api.auth.routes import auth_router
+from src.api.users.routes import auth_router
 from src.config.settings import PROJECT_CONFIG, APP_CONFIG
 from src.db.main import init_db
-
-# Logger
-logger = logging.getLogger('uvicorn')  # Get the logger from uvicorn
-logger.setLevel(logging.INFO)
+from src.config.handler import logger
 
 
 # Coroutine Life Span
@@ -51,8 +46,8 @@ async def health_check() -> dict:
 
 
 app.include_router(
-    book_router, prefix=f"{API_VERSION_PREFIX}/books", tags=["Books"],
+    book_router, prefix=f"{API_VERSION_PREFIX}/book", tags=["Book"],
 )
 app.include_router(
-    auth_router, prefix=f"{API_VERSION_PREFIX}/auth", tags=["Auth"],
+    auth_router, prefix=f"{API_VERSION_PREFIX}/user", tags=["User"],
 )

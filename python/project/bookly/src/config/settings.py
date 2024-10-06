@@ -15,7 +15,6 @@ class AppConfigModel(BaseModel):
     license_info: dict
     contact: dict
 
-
 class AppConfig(PydanticBaseSettings):
     app: AppConfigModel
 
@@ -66,6 +65,9 @@ class ProjectConfig(PydanticBaseSettings):
 
 class EnvConfig(PydanticBaseSettings):
     DATABASE_URL: str
+    JWT_SECRET_KEY: str
+    JWT_ALGORITHM: str
+    JWT_MAXAGE: int
 
     model_config = PydanticSettingsConfigDict(
         env_file=".env",
