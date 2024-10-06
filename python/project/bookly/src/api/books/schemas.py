@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, date
 
 from pydantic import BaseModel
 from src.api.reviews.schemas import ReviewModel
@@ -12,7 +12,8 @@ class Book(BaseModel):
     title: str
     author: str
     publisher: str
-    page_count: str
+    page_count: int
+    published_date: date
     language: str
     created_at: datetime
     updated_at: datetime
@@ -29,7 +30,8 @@ class BookCreateModel(BaseModel):
     title: str
     author: str
     publisher: str
-    published_date: datetime
+    page_count: int
+    published_date: date
     language: str
 
 
@@ -39,4 +41,11 @@ class BookUpdateModel(BaseModel):
     author: str
     publisher: str
     page_count: int
+    published_date: date
     language: str
+
+
+class BookResponseModel(BaseModel):
+    """Response Model for the Book API"""
+    message: str
+    data: Book | list[Book]

@@ -7,6 +7,7 @@ requires-python = ">=3.11"
 license="MIT"
 authors = [{ name = "Navin Kumar M" }]
 dependencies = [
+    "alembic>=1.13.3",
     "asyncpg>=0.29.0",
     "fastapi[all]>=0.115.0",
     "psycopg2>=2.9.9",

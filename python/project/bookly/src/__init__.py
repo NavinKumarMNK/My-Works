@@ -1,9 +1,10 @@
 import logging
 
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 
 from src.api.books.routes import book_router
+from src.api.auth.routes import auth_router
 from src.config.settings import PROJECT_CONFIG, APP_CONFIG
 from src.db.main import init_db
 
@@ -39,6 +40,19 @@ app = FastAPI(
 )
 
 
+@app.get("/", status_code=status.HTTP_200_OK, tags=["Default"])
+async def entry() -> dict:
+    return {"message": "Rest API service is on /api/v1"}
+
+
+@app.get(f"{API_VERSION_PREFIX}/health", status_code=status.HTTP_200_OK, tags=["Default"])
+async def health_check() -> dict:
+    return {"message": "Health is fine"}
+
+
 app.include_router(
     book_router, prefix=f"{API_VERSION_PREFIX}/books", tags=["Books"],
+)
+app.include_router(
+    auth_router, prefix=f"{API_VERSION_PREFIX}/auth", tags=["Auth"],
 )
