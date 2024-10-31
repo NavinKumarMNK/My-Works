@@ -1,0 +1,42 @@
+version: 3
+
+env:
+  DEV_ENV_NAME: django-saas-dev
+
+tasks:
+  build:
+    cmds:
+      - docker-compose -p ${DEV_ENV_NAME} build
+    desc: Build the docker-compose containers
+
+  up:
+    cmds:
+      - docker-compose -p ${DEV_ENV_NAME} up
+    desc: Spin up the containers
+
+  logs:
+    cmds:
+      - docker-compose -p ${DEV_ENV_NAME} logs
+    desc: Get the logs of the cluster
+
+  attach:
+    cmds:
+      - docker-compose -p ${DEV_ENV_NAME} exec web bash
+    desc: Attach the terminal to web-server
+
+  attach-postgres:
+    cmds:
+      - docker-compose -p ${DEV_ENV_NAME} exec postgres bash
+    desc: Attach the terminal to PostgreSQL
+
+  run:
+    cmds:
+      - task build
+      - task up
+    desc: Run build and up tasks sequentially
+
+  migrate:
+    cmds:
+      - docker-compose -p ${DEV_ENV_NAME} exec web python manage.py makemigrations
+      - docker-compose -p ${DEV_ENV_NAME} exec web python manage.py migrate
+    desc: Run migrations directly in the web container

@@ -1,1 +1,6 @@
 .venv
+*.sqlite3
+.env
+
+src/staticfiles/
+src/local-cdn

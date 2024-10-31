@@ -6,10 +6,13 @@
                 Django-SaaS
             {% endblock head_title %}
         </title>
+        {% include "base/css.html" %}
     </head>
     <body>
+        {% include "components/navbar.html" %}
         {% block content %}
             Base HTML
         {% endblock content %}
+        {% include "base/js.html" %}
     </body>
 </html>
